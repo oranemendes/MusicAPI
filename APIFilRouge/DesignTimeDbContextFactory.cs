@@ -13,7 +13,6 @@ namespace APIFilRouge
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.Development.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
@@ -21,7 +20,7 @@ namespace APIFilRouge
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            builder.UseMySql(connectionString);
+            builder.UseSqlServer(connectionString);
             
             return new MusicContext(builder.Options);
         }

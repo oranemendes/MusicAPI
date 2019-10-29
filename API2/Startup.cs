@@ -2,19 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using APIFilRouge.Models;
+using API2.Models;
+using API2.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MySql.Data.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
-namespace APIFilRouge
+namespace API2
 {
     public class Startup
     {
@@ -28,14 +28,16 @@ namespace APIFilRouge
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          //  var connexion = "server=localhost;database=MusicItems;user=root;password=root;";
-          //  services.AddDbContext<MusicContext>(opt =>
-                //    opt.UseInMemoryDatabase("MusicList"));
-                //opt.UseMySql(Configuration.GetConnectionString(connexion)));
-          //      opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-             services.AddMvc()
-                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
-            services.AddControllers();
+            services.Configure<MusicDatabaseSettings>(
+                Configuration.GetSection(nameof(MusicDatabaseSettings)));
+
+            services.AddSingleton<IMusicDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<MusicDatabaseSettings>>().Value);
+
+            services.AddSingleton<MusicService>();
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options => options.UseMemberCasing());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,9 +47,6 @@ namespace APIFilRouge
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
