@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row">
+    
+    <div class="col-12">
+      <div *ngFor="let mus of service.list" class="musicitem" >
+        <div class="row">
+          <div class="col-2" (click)="populateForm(mus)">
+            {{ mus.Title }}
+          </div>
+          <div class="col-2" (click)="populateForm(mus)">
+            {{ mus.Group }}
+          </div>
+          <div class="col-2" (click)="populateForm(mus)">
+            {{ mus.Year }}
+          </div>
+          <div class="col-2" (click)="populateForm(mus)">
+            <a href="{{ mus.Link }}" target="_blank">{{ mus.Platform }}</a>
+          </div>
+          <div class="col-2" (click)="populateForm(mus)">
+            <img src="{{ mus.Image }}" alt="Single Image" width="150px" />
+          </div>
+          <div class="col-2">
+            <button class="btn btn-danger" (click)="onDelete(mus.Id)">Supprimer</button>
+            <button class="btn btn-success">Modifier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

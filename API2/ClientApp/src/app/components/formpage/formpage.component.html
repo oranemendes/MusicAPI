@@ -1,0 +1,76 @@
+<!--<div class="container-fluid">
+  <div class="row">
+    <div class="offset-3"></div>
+    <div class="col-6">
+      <form [formGroup]="newMusicForm" (submit)="onSubmit(newMusicForm)">
+        <div class="form-group">
+          <label for="title">Titre</label>
+          <input type="text" formControlName="title" class="form-control" id="title" [(ngModel)]="service.formData.title" required />
+        </div>
+        <div class="form-group">
+          <label for="group">Interprète</label>
+          <input type="text" formControlName="group" class="form-control" id="group" />
+        </div>
+        <div class="form-group">
+          <label for="year">Année</label>
+          <input type="text" formControlName="year" class="form-control" id="year" />
+        </div>
+        <div class="form-group">
+          <label for="platform">Plateforme d'écoute</label>
+          <input type="text" formControlName="platform" class="form-control" id="platform" />
+        </div>
+        <div class="form-group">
+          <label for="link">Lien d'écoute</label>
+          <input type="text" formControlName="link" class="form-control" id="link" />
+        </div>
+        <div class="form-group">
+          <label for="image">Lien de l'image</label>
+          <input type="text" formControlName="image" class="form-control" id="image" />
+        </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="offset-4"></div>
+            <div class="col-4">
+              <button class="btn btn-primary" type="submit" [disabled]="newMusicForm.invalid">Ajouter cette piste</button>
+            </div>
+            <div class="offset-4"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="offset-3"></div>
+  </div>
+</div>-->
+
+<div class="container-fluid">
+  <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <input type="hidden" name="Id" [value]="service.formData.Id">
+    <div class="form-group">
+      <input name="Title" #Title="ngModel" [(ngModel)]="service.formData.Title" class="form-control"
+             placeholder="Titre" required>
+    </div>
+    <div class="form-group">
+      <input name="Group" #Group="ngModel" [(ngModel)]="service.formData.Group" class="form-control"
+             placeholder="Interprète" required>
+    </div>
+    <div class="form-group">
+      <input name="Year" #Year="ngModel" [(ngModel)]="service.formData.Year" class="form-control"
+             placeholder="Année" required>
+    </div>
+    <div class="form-group">
+      <input name="Platform" #Platform="ngModel" [(ngModel)]="service.formData.Platform" class="form-control"
+             placeholder="Plateforme d'écoute" required>
+    </div>
+    <div class="form-group">
+      <input name="Link" #Link="ngModel" [(ngModel)]="service.formData.Link" class="form-control"
+             placeholder="Lien d'écoute" required>
+    </div>
+    <div class="form-group">
+      <input name="Image" #Image="ngModel" [(ngModel)]="service.formData.Image" class="form-control"
+             placeholder="Lien de l'image" required>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid">Envoyer</button>
+    </div>
+  </form>
+</div>

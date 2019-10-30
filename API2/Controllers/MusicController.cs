@@ -2,9 +2,12 @@ using API2.Models;
 using API2.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+//using Microsoft.AspNetCore.Cors;
+using System.Web.Http.Cors;
 
 namespace API2.Controllers
 {
+    [EnableCors("localhost:4200, http://localhost:4200","*","*")]
     [Route("api/[controller]")]
     [ApiController]
     public class MusicController : ControllerBase
@@ -17,11 +20,13 @@ namespace API2.Controllers
             _musicService = musicService;
         }
 
+        [EnableCors("localhost:4200, http://localhost:4200","*","*")]
         [HttpGet]
         public ActionResult<List<Music>> Get() =>
             _musicService.Get();
         
-        [HttpGet("{id:length(24)}", Name = "GetBook")]
+        [EnableCors("localhost:4200, http://localhost:4200","*", "*")]
+        [HttpGet("{id:length(24)}", Name = "GetMusic")]
         public ActionResult<Music> Get(string id)
         {
             var music = _musicService.Get(id);
@@ -34,6 +39,7 @@ namespace API2.Controllers
             return music;
     }
         
+        [EnableCors( "localhost:4200, http://localhost:4200", "*", "*")]
         [HttpPost]
         public ActionResult<Music> Create(Music music)
         {
@@ -42,6 +48,7 @@ namespace API2.Controllers
             return CreatedAtRoute("GetMusic", new { id = music.Id.ToString() }, music);
         }
 
+        [EnableCors( "localhost:4200, http://localhost:4200",  "*", "*")]
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Music musicIn)
         {
@@ -57,6 +64,7 @@ namespace API2.Controllers
             return NoContent();
         }
 
+        [EnableCors("localhost:4200, http://localhost:4200","*",  "*")]
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
